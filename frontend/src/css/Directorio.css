@@ -1,0 +1,25 @@
+.directorio-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
+    margin: 0 32px;
+}
+
+.directorio-grid .portada {
+    aspect-ratio: 2/3;
+}
+
+.directorio-header {
+    padding: 24px 32px 16px;
+}
+
+.directorio-header h1 {
+    color: white;
+    margin-bottom: 16px;
+}
+
+.directorio-filtros {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}

@@ -1,41 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import "../css/Filtros.css";
 
-function Generos() {
-    const [generos, setGeneros] = useState([]);
-    const [isOpen, setIsOpen] = useState(false);
+function Generos({ generos, isOpen, onToggle }) {
     const navigate = useNavigate();
-
-    useEffect(() => {
-        axios.get(`http://localhost:3000/generos`).then((response) => {
-            setGeneros(response.data);
-        });
-    }, []);
 
     const handleGeneroClick = (generoId) => {
         navigate(`/directorio?genero=${generoId}`);
-        setIsOpen(false);
-    };
-
-    const toggleMenu = () => {
-        setIsOpen(!isOpen);
+        onToggle(false);
     };
 
     return (
-        <div>
-            <button onClick={toggleMenu}>
-                {isOpen ? "✕" : "☰"} Géneros
+        <div className="generos-wrapper">
+            <button className={`generos-btn ${isOpen ? "generos-btn-activo" : ""}`} onClick={() => onToggle(!isOpen)}>
+                Géneros
             </button>
             {isOpen && (
-                <div>
+                <div className="generos-dropdown">
                     {generos.map((genero) => (
-                        <div
-                            key={genero.id}
-                            onClick={() => handleGeneroClick(genero.id)}
-                        >
-                            <p>{genero.nombre}</p>
-                        </div>
+                        <p key={genero.id} onClick={() => handleGeneroClick(genero.id)}>
+                            {genero.nombre}
+                        </p>
                     ))}
                 </div>
             )}

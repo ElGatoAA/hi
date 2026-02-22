@@ -1,0 +1,25 @@
+.sugerencias-container {
+    background-color: #635E5E;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 320px;
+    flex-shrink: 0;
+}
+
+.sugerencias-container h2 {
+    color: white;
+    margin: 0;
+}
+
+.sugerencias-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.sugerencias-grid .portada {
+    aspect-ratio: 2/3;
+}

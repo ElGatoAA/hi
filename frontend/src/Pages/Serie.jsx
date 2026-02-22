@@ -1,4 +1,4 @@
-import React, { use } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -6,8 +6,8 @@ import Descripcion from "../components/Descripcion";
 import Capitulos_serie from "../components/Capitulos_serie";
 import Sugerencias from "../components/Sugerencias";
 import Comentarios from "../components/Comentarios";
-import Rating from "../components/Rating";
 import Nav from "../components/Nav";
+import "../css/Serie.css";
 
 function Serie() {
     const { id } = useParams();
@@ -16,14 +16,10 @@ function Serie() {
     const [generos, setGeneros] = useState([]);
 
     useEffect(() => {
-        // Scroll al inicio cuando cambie la serie
         window.scrollTo(0, 0);
-        
-        // Resetear estados
         setSerie(null);
         setCapituloserie([]);
         setGeneros([]);
-        
         axios.get(`http://localhost:3000/serie/${id}`).then((response) => {
             setSerie(response.data);
         });
@@ -31,12 +27,12 @@ function Serie() {
 
     useEffect(() => {
         if (!serie) return;
-            axios.get(`http://localhost:3000/capitulosSerie/${serie.id}`).then((response) => {
-                setCapituloserie(response.data);
-            });
-            axios.get(`http://localhost:3000/generosDeSerie/${serie.id}`).then((response) => {
-                setGeneros(response.data);
-            });
+        axios.get(`http://localhost:3000/capitulosSerie/${serie.id}`).then((response) => {
+            setCapituloserie(response.data);
+        });
+        axios.get(`http://localhost:3000/generosDeSerie/${serie.id}`).then((response) => {
+            setGeneros(response.data);
+        });
     }, [serie]);
 
     if (!serie) return <p>Cargando...</p>;
@@ -44,21 +40,28 @@ function Serie() {
     return (
         <div>
             <Nav />
-            <Descripcion 
-                name={serie.name} 
-                description={serie.description} 
-                year={serie.year} 
-                img={`/src/assets/${serie.img}`}
-                generos={generos}
-                serieId={id}
-            />
-            <Rating serieId={id} />
-            <h1>Capítulos</h1>
-            {capituloserie.map((item) => (
-                <Capitulos_serie key={item.id} name={item.name} number={item.number} img={`/src/assets/${item.img}`} id={item.id}/>
-            ))}
-            <Comentarios serieId={id} />
-            <Sugerencias serieId={id} />
+            <div className="serie-layout">
+                <div className="serie-principal">
+                    <Descripcion
+                        name={serie.name}
+                        description={serie.description}
+                        year={serie.year}
+                        img={`/src/assets/${serie.img}`}
+                        generos={generos}
+                        serieId={id}
+                    />
+                    <div className="capitulos-container">
+                        <h1>Capítulos</h1>
+                        {capituloserie.map((item) => (
+                            <Capitulos_serie key={item.id} name={item.name} number={item.number} img={`/src/assets/${item.img}`} id={item.id} />
+                        ))}
+                    </div>
+                    <Comentarios serieId={id} />
+                </div>
+                <div className="serie-lateral">
+                    <Sugerencias serieId={id} />
+                </div>
+            </div>
         </div>
     );
 }

@@ -1,0 +1,123 @@
+.comentarios-container {
+    max-width: 95%;
+    margin: 16px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background-color: #635E5E;
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.comentarios-container h2 {
+    color: white;
+}
+
+.comentario-form textarea {
+    width: 100%;
+    background-color: #736D6D;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 15px;
+    outline: none;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+.comentario-form textarea::placeholder {
+    color: #d1d1d1;
+}
+
+.comentario-form button,
+.comentario-respuesta button {
+    background-color: #736D6D;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 8px;
+}
+
+.comentario-form button:hover,
+.comentario-respuesta button:hover {
+    background-color: #2C87F5;
+}
+
+.comentario-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px 0;
+    border-left: 2px solid #736D6D;
+    padding-left: 12px;
+}
+
+.comentario-autor {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.comentario-autor img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.comentario-autor strong {
+    color: white;
+}
+
+.comentario-autor span {
+    color: #aaa;
+    font-size: 12px;
+}
+
+.comentario-mensaje {
+    color: white;
+    margin: 0;
+}
+
+.comentario-acciones {
+    display: flex;
+    gap: 8px;
+}
+
+.comentario-acciones button {
+    background-color: transparent;
+    color: #aaa;
+    border: none;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.comentario-acciones button:hover {
+    color: #2C87F5;
+}
+
+.comentario-respuesta {
+    margin-top: 8px;
+}
+
+.comentario-respuesta-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    color: white;
+    font-size: 13px;
+}
+
+.no-logueado {
+    color: #aaa;
+}

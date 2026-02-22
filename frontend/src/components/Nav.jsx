@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Buscador from "./Buscador";
+import "../css/Nav.css";
 
 function Nav() {
   const [user, setUser] = useState(null);
@@ -15,27 +16,32 @@ function Nav() {
   return (
     <nav className="navbar">
         <Link to="/">
-            <p>Home</p>
+            <img src="/src/assets/pf/dev.png" alt="logo" width="40" height="40" />
+        </Link>
+        <Link to="/">
+            <button>Home</button>
         </Link>
         <Link to="/directorio">
-            <p>Directorio</p>
+            <button>Directorio</button>
         </Link>
         <Buscador />
-        {user ? (
-          <Link to="/perfil">
-            <img 
-              src={`/src/assets/pf/${user.imagen}`} 
-              alt={user.usuario}
-              width="40"
-              height="40"
-            />
-            <span>{user.usuario}</span>
-          </Link>
-        ) : (
-          <Link to="/auth">
-            <button>Login</button>
-          </Link>
-        )}
+        <div className="navbar-usuario">
+          {user ? (
+            <Link to="/perfil" className="navbar-perfil">
+              <img
+                src={`/src/assets/pf/${user.imagen}`}
+                alt={user.usuario}
+                width="40"
+                height="40"
+              />
+              <span>{user.usuario}</span>
+            </Link>
+          ) : (
+            <Link to="/auth">
+              <button>Login</button>
+            </Link>
+          )}
+        </div>
     </nav>
   );
 }

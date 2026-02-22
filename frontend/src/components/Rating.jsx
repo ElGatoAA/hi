@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "../css/Serie.css";
 
 function Rating({ serieId }) {
     const [ratingUsuario, setRatingUsuario] = useState(null);
@@ -11,12 +12,8 @@ function Rating({ serieId }) {
     useEffect(() => {
         const token = localStorage.getItem("token");
         setIsLoggedIn(!!token);
-
         cargarRatingPromedio();
-
-        if (token) {
-            cargarRatingUsuario(token);
-        }
+        if (token) cargarRatingUsuario(token);
     }, [serieId]);
 
     const cargarRatingPromedio = async () => {
@@ -25,7 +22,7 @@ function Rating({ serieId }) {
             setRatingPromedio(response.data.promedio);
             setTotalRatings(response.data.total_ratings);
         } catch (error) {
-            console.error("Error al cargar rating promedio:", error);
+            console.error(error);
         }
     };
 
@@ -37,7 +34,7 @@ function Rating({ serieId }) {
             );
             setRatingUsuario(response.data.rating);
         } catch (error) {
-            console.error("Error al cargar rating del usuario:", error);
+            console.error(error);
         }
     };
 
@@ -46,7 +43,6 @@ function Rating({ serieId }) {
             alert("Debes iniciar sesión para calificar");
             return;
         }
-
         try {
             const token = localStorage.getItem("token");
             await axios.post(
@@ -54,52 +50,34 @@ function Rating({ serieId }) {
                 { serie_id: serieId, rating },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
-
             setRatingUsuario(rating);
-            cargarRatingPromedio(); // Recargar el promedio
+            cargarRatingPromedio();
         } catch (error) {
-            console.error("Error al guardar rating:", error);
-            alert(error.response?.data?.error || "Error al guardar rating");
+            console.error(error);
         }
     };
 
     return (
-        <div>
-            <div>
-                <h3>Calificación</h3>
-                {ratingPromedio ? (
-                    <p>
-                        ★ {ratingPromedio} / 5 ({totalRatings} {totalRatings === 1 ? 'voto' : 'votos'})
-                    </p>
-                ) : (
-                    <p>Sin calificaciones aún</p>
-                )}
-            </div>
-
+        <>
+            <p className="rating-promedio">
+                ★ {ratingPromedio ?? "—"} <span>({totalRatings})</span>
+            </p>
             {isLoggedIn && (
-                <div>
-                    <p>Tu calificación:</p>
-                    <div>
-                        {[1, 2, 3, 4, 5].map((star) => (
-                            <span
-                                key={star}
-                                onClick={() => handleRating(star)}
-                                onMouseEnter={() => setHover(star)}
-                                onMouseLeave={() => setHover(null)}
-                                style={{
-                                    cursor: "pointer",
-                                    fontSize: "30px",
-                                    color: star <= (hover || ratingUsuario) ? "#ffd700" : "#ccc"
-                                }}
-                            >
-                                ★
-                            </span>
-                        ))}
-                    </div>
-                    {ratingUsuario && <p>Calificaste con {ratingUsuario} estrellas</p>}
+                <div className="rating-estrellas">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                        <span
+                            key={star}
+                            onClick={() => handleRating(star)}
+                            onMouseEnter={() => setHover(star)}
+                            onMouseLeave={() => setHover(null)}
+                            className={star <= (hover || ratingUsuario) ? "estrella activa" : "estrella"}
+                        >
+                            ★
+                        </span>
+                    ))}
                 </div>
             )}
-        </div>
+        </>
     );
 }
 

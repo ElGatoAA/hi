@@ -1,0 +1,163 @@
+.serie-container {
+    padding: 32px;
+    color: white;
+    background-color: #635E5E;
+    border-radius: 12px;
+}
+
+.serie-nombre {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 24px;
+    color: white;
+}
+
+.serie-contenido {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+}
+
+.serie-izquierda {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex-shrink: 0;
+}
+
+.serie-izquierda img {
+    width: 250px;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.serie-acciones {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.serie-derecha {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    color: white;
+}
+
+.serie-derecha p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+.serie-generos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.serie-genero-btn {
+    background-color: #736D6D;
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 13px;
+    transition: background-color 0.3s ease;
+}
+
+.serie-genero-btn:hover {
+    background-color: #2C87F5;
+}
+
+.rating-promedio {
+    color: white;
+    margin: 0;
+    font-size: 14px;
+}
+
+.rating-promedio span {
+    color: #aaa;
+    font-size: 12px;
+}
+
+.rating-estrellas {
+    display: flex;
+    gap: 2px;
+}
+
+.estrella {
+    font-size: 24px;
+    cursor: pointer;
+    color: #736D6D;
+    transition: color 0.2s ease;
+}
+
+.estrella.activa {
+    color: #ffd700;
+}
+
+.serie-layout {
+    display: flex;
+    gap: 16px;
+    max-width: 95%;
+    margin: 32px auto;
+    align-items: flex-start;
+}
+
+.serie-principal {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+    min-width: 0;
+}
+
+.serie-lateral {
+    width: 320px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 16px;
+    align-self: flex-start;
+}
+
+.capitulos-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.capitulos-container h1 {
+    color: white;
+    margin-bottom: 8px;
+}
+
+.capitulo-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background-color: #635E5E;
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    padding: 8px;
+}
+
+.capitulo-item:hover {
+    background-color: #2C87F5;
+}
+
+.capitulo-item img {
+    width: 160px;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    flex-shrink: 0;
+    border-radius: 8px;
+}
+
+.capitulo-item p {
+    color: white;
+    margin: 0;
+    font-weight: bold;
+}

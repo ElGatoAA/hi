@@ -1,0 +1,72 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 32px;
+    background-color: #635E5E;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.navbar > a:first-child img {
+    border-radius: 8px;
+}
+
+.navbar-usuario {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.navbar a {
+    text-decoration: none;
+}
+
+.navbar button {
+    background-color: #736D6D;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.navbar button:hover {
+    background-color: #2C87F5;
+}
+
+.navbar-perfil {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.navbar-perfil img {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.navbar-perfil span {
+    color: white;
+}
+
+.buscador-form {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.buscador-form input {
+    background-color: #736D6D;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 15px;
+    outline: none;
+}
+
+.buscador-form input::placeholder {
+    color: #d1d1d1;
+}

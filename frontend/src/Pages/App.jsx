@@ -17,9 +17,11 @@ function App() {
     <>
       <Nav />
       <h1>Portadas</h1>
-      {anime1.map((item) => (
-        <Portadas key={item.id} img={`/src/assets/${item.img}`} name={item.name} number={item.number} id={`/capitulo/${item.id}`} />
-      ))}
+      <div className="portadas-grid">
+        {anime1.map((item) => (
+          <Portadas key={item.id} img={`/src/assets/${item.img}`} name={item.name} number={item.number} id={`/capitulo/${item.id}`} />
+        ))}
+      </div>
     </>
   )
 }

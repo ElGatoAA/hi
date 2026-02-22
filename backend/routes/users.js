@@ -2,6 +2,8 @@ import { Router } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import multer from "multer";
+import fs from "fs";
+import path from "path";
 import { pool } from "../db.js";
 import { verificarToken } from "../middleware/auth.js";
 import { upload } from "../config/multer.js";
@@ -76,7 +78,6 @@ router.post("/login", async (req, res) => {
 
 // ── Perfil ────────────────────────────────────────────────────────────────────
 
-// Perfil propio (requiere token)
 router.get("/perfil", verificarToken, async (req, res) => {
   try {
     const result = await pool.query(
@@ -93,7 +94,6 @@ router.get("/perfil", verificarToken, async (req, res) => {
   }
 });
 
-// Perfil público
 router.get("/perfil/:usuario", async (req, res) => {
   try {
     const result = await pool.query(
@@ -126,29 +126,33 @@ router.post("/subir-foto-perfil", verificarToken, (req, res) => {
     try {
       if (!req.file) return res.status(400).json({ error: "No se subió ningún archivo" });
 
+      // Obtener foto anterior
+      const userActual = await pool.query(
+        "SELECT imagen FROM usuarios WHERE id = $1",
+        [req.userId]
+      );
+      const fotoAnterior = userActual.rows[0]?.imagen;
+
+      // Actualizar en base de datos
       const result = await pool.query(
         "UPDATE usuarios SET imagen = $1 WHERE id = $2 RETURNING id, usuario, imagen",
         [req.file.filename, req.userId]
       );
+
+      // Borrar foto anterior del disco si no es la default
+      if (fotoAnterior && fotoAnterior !== "dev.png") {
+        const rutaAnterior = path.join(process.cwd(), "../frontend/src/assets/pf", fotoAnterior);
+        fs.unlink(rutaAnterior, (err) => {
+          if (err) console.error("No se pudo borrar la foto anterior:", err.message);
+        });
+      }
+
       res.json({ message: "Foto subida exitosamente", imagen: result.rows[0].imagen });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "Error al subir foto: " + error.message });
     }
   });
-});
-
-router.put("/usar-foto-default", verificarToken, async (req, res) => {
-  try {
-    const result = await pool.query(
-      "UPDATE usuarios SET imagen = 'dev.png' WHERE id = $1 RETURNING id, usuario, imagen",
-      [req.userId]
-    );
-    res.json({ message: "Foto restablecida a la predeterminada", imagen: result.rows[0].imagen });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error al usar foto default" });
-  }
 });
 
 export default router;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Comentario from "./Comentario";
+import "../css/Comentarios.css";
 
 function Comentarios({ serieId }) {
     const [comentarios, setComentarios] = useState([]);
@@ -12,7 +13,6 @@ function Comentarios({ serieId }) {
 
     useEffect(() => {
         cargarComentarios();
-        
         const userData = localStorage.getItem("user");
         if (userData) {
             const user = JSON.parse(userData);
@@ -26,51 +26,35 @@ function Comentarios({ serieId }) {
             const response = await axios.get(`http://localhost:3000/comentarios/${serieId}`);
             setComentarios(response.data);
         } catch (error) {
-            console.error("Error al cargar comentarios:", error);
+            console.error(error);
         }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        if (!isLoggedIn) {
-            alert("Debes iniciar sesión para comentar");
-            return;
-        }
-
-        if (!mensaje.trim()) return;
+        if (!isLoggedIn || !mensaje.trim()) return;
 
         try {
             const token = localStorage.getItem("token");
             const response = await axios.post(
                 "http://localhost:3000/comentarios",
-                {
-                    serie_id: serieId,
-                    mensaje: mensaje,
-                    comentario_padre_id: respondiendo?.id || null
-                },
+                { serie_id: serieId, mensaje, comentario_padre_id: respondiendo?.id || null },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
-
             setComentarios([...comentarios, response.data]);
             setMensaje("");
             setRespondiendo(null);
         } catch (error) {
-            console.error("Error al crear comentario:", error);
+            console.error(error);
             alert(error.response?.data?.error || "Error al crear comentario");
         }
     };
 
     const handleResponder = (comentario) => {
-        if (!isLoggedIn) {
-            alert("Debes iniciar sesión para responder");
-            return;
-        }
+        if (!isLoggedIn) return;
         setRespondiendo(comentario);
         const textoInicial = `@${comentario.usuario} `;
         setMensaje(textoInicial);
-        
-        // Esperar a que el textarea se renderice y luego posicionar el cursor
         setTimeout(() => {
             if (textareaRef.current) {
                 textareaRef.current.focus();
@@ -86,44 +70,37 @@ function Comentarios({ serieId }) {
 
     const handleEliminar = async (comentarioId) => {
         if (!confirm("¿Estás seguro de eliminar este comentario?")) return;
-
         try {
             const token = localStorage.getItem("token");
             await axios.delete(
                 `http://localhost:3000/comentarios/${comentarioId}`,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
-
             setComentarios(comentarios.filter(c => c.id !== comentarioId));
         } catch (error) {
-            console.error("Error al eliminar comentario:", error);
-            alert(error.response?.data?.error || "Error al eliminar comentario");
+            console.error(error);
         }
     };
 
-    // Función recursiva para obtener todas las respuestas de un comentario
-    const getRespuestasRecursivas = (comentarioId) => {
-        return comentarios.filter(c => c.comentario_padre_id === comentarioId);
-    };
+    const getRespuestasRecursivas = (comentarioId) =>
+        comentarios.filter(c => c.comentario_padre_id === comentarioId);
 
-    // Renderizar comentario con sus respuestas recursivamente
     const renderComentario = (comentario, nivel = 0) => {
         const respuestas = getRespuestasRecursivas(comentario.id);
         const esRespondiendo = respondiendo?.id === comentario.id;
 
         return (
-            <div key={comentario.id} style={{ marginLeft: nivel > 0 ? "40px" : "0" }}>
-                <Comentario 
+            <div key={comentario.id} style={{ marginLeft: nivel > 0 ? "32px" : "0" }}>
+                <Comentario
                     comentario={comentario}
                     onResponder={handleResponder}
                     onEliminar={handleEliminar}
                     usuarioActual={usuarioActual}
                 />
-                
-                {esRespondiendo && isLoggedIn && (
-                    <div style={{ marginLeft: "40px", marginBottom: "15px" }}>
-                        <form onSubmit={handleSubmit}>
-                            <div>
+                {esRespondiendo && (
+                    <div className="comentario-respuesta">
+                        <form onSubmit={handleSubmit} className="comentario-form">
+                            <div className="comentario-respuesta-header">
                                 <span>Respondiendo a @{respondiendo.usuario}</span>
                                 <button type="button" onClick={cancelarRespuesta}>Cancelar</button>
                             </div>
@@ -138,21 +115,19 @@ function Comentarios({ serieId }) {
                         </form>
                     </div>
                 )}
-
-                {respuestas.map(respuesta => renderComentario(respuesta, nivel + 1))}
+                {respuestas.map(r => renderComentario(r, nivel + 1))}
             </div>
         );
     };
 
-    // Obtener solo comentarios padre (sin padre)
     const comentariosPadres = comentarios.filter(c => !c.comentario_padre_id);
 
     return (
-        <div>
+        <div className="comentarios-container">
             <h2>Comentarios ({comentarios.length})</h2>
-            
+
             {isLoggedIn && !respondiendo ? (
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className="comentario-form">
                     <textarea
                         value={mensaje}
                         onChange={(e) => setMensaje(e.target.value)}
@@ -162,11 +137,11 @@ function Comentarios({ serieId }) {
                     <button type="submit">Comentar</button>
                 </form>
             ) : !isLoggedIn && (
-                <p>Debes iniciar sesión para comentar</p>
+                <p className="no-logueado">Debes iniciar sesión para comentar</p>
             )}
 
             <div>
-                {comentariosPadres.map(comentario => renderComentario(comentario))}
+                {comentariosPadres.map(c => renderComentario(c))}
             </div>
         </div>
     );

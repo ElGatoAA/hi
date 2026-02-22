@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Nav from "../components/Nav";
+import "../css/Auth.css";
 
 function Auth() {
     const [isLogin, setIsLogin] = useState(true);
@@ -14,10 +15,7 @@ function Auth() {
     const navigate = useNavigate();
 
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+        setFormData({ ...formData, [e.target.name]: e.target.value });
         setError("");
     };
 
@@ -27,19 +25,17 @@ function Auth() {
 
         try {
             const endpoint = isLogin ? "/login" : "/registro";
-            const data = isLogin 
+            const data = isLogin
                 ? { usuario: formData.usuario, contrasena: formData.contrasena }
                 : formData;
 
             const response = await axios.post(`http://localhost:3000${endpoint}`, data);
-            
-            // Guardar token en localStorage
+
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("user", JSON.stringify(response.data.user));
-            
-            // Redirigir al home
+
             navigate("/");
-            window.location.reload(); // Recargar para actualizar el Nav
+            window.location.reload();
         } catch (err) {
             setError(err.response?.data?.error || "Error en la autenticación");
         }
@@ -48,62 +44,65 @@ function Auth() {
     const toggleMode = () => {
         setIsLogin(!isLogin);
         setError("");
-        setFormData({
-            correo: "",
-            usuario: "",
-            contrasena: ""
-        });
+        setFormData({ correo: "", usuario: "", contrasena: "" });
     };
 
     return (
         <div>
             <Nav />
-            <div>
-                <h1>{isLogin ? "Iniciar Sesión" : "Registrarse"}</h1>
-                <form onSubmit={handleSubmit}>
-                    {!isLogin && (
+            <div className="auth-container">
+                <div className="auth-box">
+                    <h1>{isLogin ? "Iniciar Sesión" : "Registrarse"}</h1>
+
+                    <form onSubmit={handleSubmit}>
+                        {!isLogin && (
+                            <div>
+                                <label>Correo</label>
+                                <input
+                                    type="email"
+                                    name="correo"
+                                    placeholder="correo@ejemplo.com"
+                                    value={formData.correo}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                        )}
                         <div>
-                            <label>Correo:</label>
+                            <label>Usuario</label>
                             <input
-                                type="email"
-                                name="correo"
-                                value={formData.correo}
+                                type="text"
+                                name="usuario"
+                                placeholder="Tu usuario"
+                                value={formData.usuario}
                                 onChange={handleChange}
                                 required
                             />
                         </div>
-                    )}
-                    <div>
-                        <label>Usuario:</label>
-                        <input
-                            type="text"
-                            name="usuario"
-                            value={formData.usuario}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label>Contraseña:</label>
-                        <input
-                            type="password"
-                            name="contrasena"
-                            value={formData.contrasena}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    {error && <p>{error}</p>}
-                    <button type="submit">
-                        {isLogin ? "Iniciar Sesión" : "Registrarse"}
-                    </button>
-                </form>
-                <p>
-                    {isLogin ? "¿Aún no tienes una cuenta? " : "¿Ya tienes una cuenta? "}
-                    <span onClick={toggleMode} style={{ cursor: "pointer", textDecoration: "underline" }}>
-                        {isLogin ? "Regístrate" : "Inicia sesión"}
-                    </span>
-                </p>
+                        <div>
+                            <label>Contraseña</label>
+                            <input
+                                type="password"
+                                name="contrasena"
+                                placeholder="Tu contraseña"
+                                value={formData.contrasena}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        {error && <p className="auth-error">{error}</p>}
+                        <button type="submit">
+                            {isLogin ? "Iniciar Sesión" : "Registrarse"}
+                        </button>
+                    </form>
+
+                    <p>
+                        {isLogin ? "¿No tienes cuenta? " : "¿Ya tienes cuenta? "}
+                        <span onClick={toggleMode}>
+                            {isLogin ? "Regístrate" : "Inicia sesión"}
+                        </span>
+                    </p>
+                </div>
             </div>
         </div>
     );

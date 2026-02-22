@@ -1,0 +1,46 @@
+.portadas-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin: 0 32px;
+}
+
+.portadas-grid .portada {
+    aspect-ratio: 16/9;
+}
+
+.portada {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.portada img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.portada:hover img {
+    transform: scale(1.05);
+}
+
+.portada-nombre {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 24px 12px 12px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    background: linear-gradient(to top, #736D6D, transparent);
+    transition: background 0.3s ease;
+}
+
+.portada:hover .portada-nombre {
+    background: linear-gradient(to top, #2C87F5, transparent);
+}

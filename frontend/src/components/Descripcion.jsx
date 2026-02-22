@@ -1,27 +1,35 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import BotonFavorito from "./BotonFavorito";
+import Rating from "./Rating";
+import "../css/Serie.css";
 
-function Descripcion({name, description, serieId, year, img, generos = []}) {
+function Descripcion({ name, description, serieId, year, img, generos = [] }) {
     return (
-        <div>
-            <h2>{name}</h2>
-            <img src={img} alt={name} width={500} height={500}/>
-            <p>Descripcion: {description}</p>
-            <p>Año: {year}</p>
-            {generos.length > 0 && (
-                <p>
-                    Géneros: {generos.map((genero, index) => (
-                        <span key={genero.id}>
-                            <Link to={`/directorio?genero=${genero.id}`}>
-                                {genero.nombre}
-                            </Link>
-                            {index < generos.length - 1 && ", "}
-                        </span>
-                    ))}
-                </p>
-            )}
-            <BotonFavorito serieId={serieId} />     
+        <div className="serie-container">
+            <h1 className="serie-nombre">{name}</h1>
+            <div className="serie-contenido">
+                <div className="serie-izquierda">
+                    <img src={img} alt={name} />
+                    <div className="serie-acciones">
+                        <BotonFavorito serieId={serieId} />
+                        <Rating serieId={serieId} />
+                    </div>
+                </div>
+                <div className="serie-derecha">
+                    <p>{description}</p>
+                    <p>Año: {year}</p>
+                    {generos.length > 0 && (
+                        <div className="serie-generos">
+                            {generos.map((genero) => (
+                                <Link key={genero.id} to={`/directorio?genero=${genero.id}`} className="serie-genero-btn">
+                                    {genero.nombre}
+                                </Link>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </div>
         </div>
     );
 }

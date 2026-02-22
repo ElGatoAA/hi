@@ -1,13 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "../css/Serie.css";
 
-function Capitulos_serie({name, number, img, id}) {
+function Capitulos_serie({ name, number, img, id }) {
     return (
-        <Link to={`/capitulo/${id}`}>
-            <div>
-                <h2>{name} {number}</h2>
-                <img src={img} alt={`Capitulo ${number}`} width="500" height="300" />
-            </div>
+        <Link to={`/capitulo/${id}`} className="capitulo-item">
+            <img src={img} alt={`Capitulo ${number}`} />
+            <p>{name} {number}</p>
         </Link>
     );
 }

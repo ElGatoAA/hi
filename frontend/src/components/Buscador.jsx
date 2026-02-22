@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../css/Nav.css";
 
 function Buscador() {
     const [searchTerm, setSearchTerm] = useState("");
@@ -13,7 +14,7 @@ function Buscador() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="buscador-form" onSubmit={handleSubmit}>
             <input
                 type="text"
                 placeholder="Buscar serie..."
