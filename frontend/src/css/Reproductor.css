@@ -26,3 +26,9 @@
     width: 100%;
     aspect-ratio: 16/9;
 }
+
+@media (max-width: 480px) {
+    .reproductor-container a {
+        padding: 16px 16px 0;
+    }
+}

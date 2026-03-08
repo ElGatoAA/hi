@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 16px;
-    margin: 0 32px;
+    margin: 0 32px 32px;
 }
 
 .portadas-grid .portada {
@@ -43,4 +43,20 @@
 
 .portada:hover .portada-nombre {
     background: linear-gradient(to top, #2C87F5, transparent);
+}
+
+@media (max-width: 768px) {
+    .portadas-grid {
+        grid-template-columns: repeat(2, 1fr);
+        margin: 0 16px 24px;
+        gap: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .portadas-grid {
+        grid-template-columns: repeat(2, 1fr);
+        margin: 0 10px 16px;
+        gap: 8px;
+    }
 }

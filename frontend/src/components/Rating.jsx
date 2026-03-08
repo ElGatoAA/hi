@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../css/Serie.css";
+import API_URL from "../config";
 
 function Rating({ serieId }) {
     const [ratingUsuario, setRatingUsuario] = useState(null);
@@ -18,7 +19,7 @@ function Rating({ serieId }) {
 
     const cargarRatingPromedio = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/rating/${serieId}`);
+            const response = await axios.get(`${API_URL}/rating/${serieId}`);
             setRatingPromedio(response.data.promedio);
             setTotalRatings(response.data.total_ratings);
         } catch (error) {
@@ -29,7 +30,7 @@ function Rating({ serieId }) {
     const cargarRatingUsuario = async (token) => {
         try {
             const response = await axios.get(
-                `http://localhost:3000/rating/${serieId}/usuario`,
+                `${API_URL}/rating/${serieId}/usuario`,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             setRatingUsuario(response.data.rating);
@@ -46,7 +47,7 @@ function Rating({ serieId }) {
         try {
             const token = localStorage.getItem("token");
             await axios.post(
-                "http://localhost:3000/rating",
+                `${API_URL}/rating`,
                 { serie_id: serieId, rating },
                 { headers: { Authorization: `Bearer ${token}` } }
             );

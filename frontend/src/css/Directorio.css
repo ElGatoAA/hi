@@ -22,4 +22,29 @@
     display: flex;
     align-items: center;
     gap: 12px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+    .directorio-grid {
+        grid-template-columns: repeat(3, 1fr);
+        margin: 0 16px;
+        gap: 12px;
+    }
+
+    .directorio-header {
+        padding: 16px 16px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .directorio-grid {
+        grid-template-columns: repeat(2, 1fr);
+        margin: 0 10px;
+        gap: 8px;
+    }
+
+    .directorio-header {
+        padding: 12px 10px 10px;
+    }
 }

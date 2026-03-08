@@ -6,6 +6,7 @@ import Pages from "../components/Pages";
 import Generos from "../components/Generos";
 import OrdenarPor from "../components/Ordenarpor";
 import "../css/Directorio.css";
+import API_URL from "../config";
 
 function Directorio() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -17,14 +18,14 @@ function Directorio() {
     const [openMenu, setOpenMenu] = useState(null); // "generos" | "ordenar" | null
 
     useEffect(() => {
-        axios.get("http://localhost:3000/generos").then((response) => {
+        axios.get(`${API_URL}/generos`).then((response) => {
             setGenerosList(response.data);
         });
     }, []);
 
     useEffect(() => {
         if (generoId) {
-            axios.get(`http://localhost:3000/genero/${generoId}`).then((response) => {
+            axios.get(`${API_URL}/genero/${generoId}`).then((response) => {
                 setGeneroNombre(response.data.nombre);
             });
         } else {

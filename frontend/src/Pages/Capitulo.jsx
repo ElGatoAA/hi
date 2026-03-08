@@ -7,6 +7,7 @@ import Sugerencias from "../components/Sugerencias";
 import Comentarios from "../components/Comentarios";
 import "../css/Serie.css";
 import Nav from "../components/Nav";
+import API_URL from "../config";
 
 function Capitulo() {
     const [capitulo, setCapitulo] = useState(null);
@@ -20,14 +21,14 @@ function Capitulo() {
         setCapitulo(null);
         setCapituloserie([]);
 
-        axios.get(`http://localhost:3000/capitulo/${id}`).then((response) => {
+        axios.get(`${API_URL}/capitulo/${id}`).then((response) => {
             setCapitulo(response.data);
         });
     }, [id]);
 
     useEffect(() => {
         if (!capitulo) return;
-            axios.get(`http://localhost:3000/capitulosSerie/${capitulo.serie_id}`).then((response) => {
+            axios.get(`${API_URL}/capitulosSerie/${capitulo.serie_id}`).then((response) => {
                 setCapituloserie(response.data);
             });
     }, [capitulo]);

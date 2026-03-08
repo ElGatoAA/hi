@@ -5,6 +5,7 @@ import Nav from "../components/Nav";
 import DetallesPerfil from "../components/DetallesPerfil";
 import Favoritos from "../components/Favoritos";
 import "../css/Perfil.css";
+import API_URL from "../config";
 
 function Perfil() {
     const [userData, setUserData] = useState(null);
@@ -39,13 +40,13 @@ function Perfil() {
     const cargarPerfilPropio = async (token) => {
         try {
             const perfilResponse = await axios.get(
-                "http://localhost:3000/perfil",
+                `${API_URL}/perfil`,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             setUserData(perfilResponse.data);
 
             const favoritosResponse = await axios.get(
-                "http://localhost:3000/favoritos",
+                `${API_URL}/favoritos`,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             setFavoritos(favoritosResponse.data);
@@ -63,12 +64,12 @@ function Perfil() {
     const cargarPerfilPublico = async (nombreUsuario) => {
         try {
             const perfilResponse = await axios.get(
-                `http://localhost:3000/perfil/${nombreUsuario}`
+                `${API_URL}/perfil/${nombreUsuario}`
             );
             setUserData(perfilResponse.data);
 
             const favoritosResponse = await axios.get(
-                `http://localhost:3000/favoritos/${nombreUsuario}`
+                `${API_URL}/favoritos/${nombreUsuario}`
             );
             setFavoritos(favoritosResponse.data);
             setLoading(false);

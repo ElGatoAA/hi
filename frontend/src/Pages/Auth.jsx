@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Nav from "../components/Nav";
 import "../css/Auth.css";
+import API_URL from "../config";
 
 function Auth() {
     const [isLogin, setIsLogin] = useState(true);
@@ -29,7 +30,7 @@ function Auth() {
                 ? { usuario: formData.usuario, contrasena: formData.contrasena }
                 : formData;
 
-            const response = await axios.post(`http://localhost:3000${endpoint}`, data);
+            const response = await axios.post(`${API_URL}${endpoint}`, data);
 
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("user", JSON.stringify(response.data.user));

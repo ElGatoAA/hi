@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Portadas from "./Portadas";
 import "../css/Sugerencias.css";
+import API_URL from "../config";
 
 function Sugerencias({ serieId }) {
     const [sugerencias, setSugerencias] = useState([]);
 
     useEffect(() => {
         if (!serieId) return;
-        axios.get(`http://localhost:3000/sugerencias/${serieId}`).then((response) => {
+        axios.get(`${API_URL}/sugerencias/${serieId}`).then((response) => {
             setSugerencias(response.data);
         });
     }, [serieId]);

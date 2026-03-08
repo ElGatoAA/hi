@@ -100,3 +100,55 @@
     color: #aaa;
     margin: 0;
 }
+
+@media (max-width: 768px) {
+    .perfil-layout {
+        flex-direction: column;
+        max-width: 95%;
+        margin: 16px auto 0;
+    }
+
+    .perfil-container {
+        width: 100%;
+        position: static;
+        flex-direction: row;
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .perfil-info {
+        text-align: left;
+    }
+
+    .favoritos-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .perfil-layout {
+        max-width: 100%;
+        margin: 10px 12px 0;
+        gap: 10px;
+    }
+
+    .perfil-container {
+        padding: 16px;
+        border-radius: 8px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .perfil-info {
+        text-align: center;
+    }
+
+    .favoritos-container {
+        padding: 16px;
+        border-radius: 8px;
+    }
+
+    .favoritos-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

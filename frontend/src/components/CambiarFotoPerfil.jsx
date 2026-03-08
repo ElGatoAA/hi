@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import API_URL from "../config";
 
 function CambiarFotoPerfil({ imagenActual, onFotoCambiada }) {
     const [mostrarSelector, setMostrarSelector] = useState(false);
@@ -27,7 +28,7 @@ function CambiarFotoPerfil({ imagenActual, onFotoCambiada }) {
             formData.append('foto', file);
 
             const response = await axios.post(
-                "http://localhost:3000/subir-foto-perfil",
+                `${API_URL}/subir-foto-perfil`,
                 formData,
                 { 
                     headers: { 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import API_URL from "../config";
 
 function BotonFavorito({ serieId }) {
     const [isFavorito, setIsFavorito] = useState(false);
@@ -18,7 +19,7 @@ function BotonFavorito({ serieId }) {
         try {
             const token = localStorage.getItem("token");
             const response = await axios.get(
-                `http://localhost:3000/favoritos/check/${serieId}`,
+                `${API_URL}/favoritos/check/${serieId}`,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             setIsFavorito(response.data.isFavorito);
@@ -38,13 +39,13 @@ function BotonFavorito({ serieId }) {
 
             if (isFavorito) {
                 await axios.delete(
-                    `http://localhost:3000/favoritos/${serieId}`,
+                    `${API_URL}/favoritos/${serieId}`,
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
                 setIsFavorito(false);
             } else {
                 await axios.post(
-                    `http://localhost:3000/favoritos`,
+                    `${API_URL}/favoritos`,
                     { serie_id: serieId },
                     { headers: { Authorization: `Bearer ${token}` } }
                 );

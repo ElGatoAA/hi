@@ -23,14 +23,11 @@
 .generos-dropdown {
     position: absolute;
     background-color: #282829;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
     border-radius: 8px;
     padding: 8px 0;
     z-index: 1000;
     min-width: 160px;
     margin-top: 4px;
-    box-shadow: none;
     border: 1px solid #635E5E;
 }
 
@@ -44,27 +41,6 @@
 
 .generos-dropdown p:hover {
     background-color: #2C87F5;
-}
-
-.ordenar-select {
-    background-color: #736D6D;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 8px 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    outline: none;
-    appearance: none;
-    -webkit-appearance: none;
-}
-
-.ordenar-select:hover {
-    background-color: #2C87F5;
-}
-
-.directorio-filtros span {
-    color: white;
 }
 
 .paginacion {
@@ -96,4 +72,20 @@
 
 .paginacion span {
     color: white;
+}
+
+@media (max-width: 480px) {
+    .generos-btn {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+
+    .paginacion {
+        gap: 10px;
+    }
+
+    .paginacion button {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
 }

@@ -8,6 +8,7 @@ import Sugerencias from "../components/Sugerencias";
 import Comentarios from "../components/Comentarios";
 import Nav from "../components/Nav";
 import "../css/Serie.css";
+import API_URL from "../config";
 
 function Serie() {
     const { id } = useParams();
@@ -20,17 +21,17 @@ function Serie() {
         setSerie(null);
         setCapituloserie([]);
         setGeneros([]);
-        axios.get(`http://localhost:3000/serie/${id}`).then((response) => {
+        axios.get(`${API_URL}/serie/${id}`).then((response) => {
             setSerie(response.data);
         });
     }, [id]);
 
     useEffect(() => {
         if (!serie) return;
-        axios.get(`http://localhost:3000/capitulosSerie/${serie.id}`).then((response) => {
+        axios.get(`${API_URL}/capitulosSerie/${serie.id}`).then((response) => {
             setCapituloserie(response.data);
         });
-        axios.get(`http://localhost:3000/generosDeSerie/${serie.id}`).then((response) => {
+        axios.get(`${API_URL}/generosDeSerie/${serie.id}`).then((response) => {
             setGeneros(response.data);
         });
     }, [serie]);

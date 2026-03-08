@@ -4,6 +4,7 @@ import ButtonNavigator from "../components/Button_navigator";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "../css/Directorio.css";
+import API_URL from "../config";
 
 function Pages({ searchTerm = "", generoId = "", ordenarPor = "alfabetico" }) {
     const [series, setSeries] = useState([]);
@@ -12,11 +13,11 @@ function Pages({ searchTerm = "", generoId = "", ordenarPor = "alfabetico" }) {
 
     useEffect(() => {
         if (generoId) {
-            axios.get(`http://localhost:3000/seriesPorGenero/${generoId}?orderBy=${ordenarPor}`).then((response) => {
+            axios.get(`${API_URL}/seriesPorGenero/${generoId}?orderBy=${ordenarPor}`).then((response) => {
                 setSeries(response.data);
             });
         } else {
-            axios.get(`http://localhost:3000/series?orderBy=${ordenarPor}`).then((response) => {
+            axios.get(`${API_URL}/series?orderBy=${ordenarPor}`).then((response) => {
                 setSeries(response.data);
             });
         }

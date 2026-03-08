@@ -6,3 +6,10 @@
     font-size: 13px;
     margin-top: 32px;
 }
+
+@media (max-width: 480px) {
+    .footer {
+        padding: 12px 16px;
+        font-size: 12px;
+    }
+}

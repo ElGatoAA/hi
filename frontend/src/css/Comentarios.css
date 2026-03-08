@@ -121,3 +121,10 @@
 .no-logueado {
     color: #aaa;
 }
+
+@media (max-width: 480px) {
+    .comentarios-container {
+        padding: 16px;
+        border-radius: 8px;
+    }
+}

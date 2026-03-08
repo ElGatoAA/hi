@@ -70,3 +70,37 @@
 .buscador-form input::placeholder {
     color: #d1d1d1;
 }
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 10px 16px;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .buscador-form {
+        order: 3;
+        width: 100%;
+    }
+
+    .buscador-form input {
+        flex: 1;
+        width: 100%;
+    }
+
+    .navbar-perfil span {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 8px 12px;
+        gap: 8px;
+    }
+
+    .navbar button {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+}

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Comentario from "./Comentario";
 import "../css/Comentarios.css";
+import API_URL from "../config";
 
 function Comentarios({ serieId }) {
     const [comentarios, setComentarios] = useState([]);
@@ -23,7 +24,7 @@ function Comentarios({ serieId }) {
 
     const cargarComentarios = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/comentarios/${serieId}`);
+            const response = await axios.get(`${API_URL}/comentarios/${serieId}`);
             setComentarios(response.data);
         } catch (error) {
             console.error(error);
@@ -37,7 +38,7 @@ function Comentarios({ serieId }) {
         try {
             const token = localStorage.getItem("token");
             const response = await axios.post(
-                "http://localhost:3000/comentarios",
+                `${API_URL}/comentarios`,
                 { serie_id: serieId, mensaje, comentario_padre_id: respondiendo?.id || null },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -73,7 +74,7 @@ function Comentarios({ serieId }) {
         try {
             const token = localStorage.getItem("token");
             await axios.delete(
-                `http://localhost:3000/comentarios/${comentarioId}`,
+                `${API_URL}/comentarios/${comentarioId}`,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             setComentarios(comentarios.filter(c => c.id !== comentarioId));

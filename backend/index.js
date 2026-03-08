@@ -25,5 +25,5 @@ app.use(comentariosRouter);
 app.use(ratingsRouter);
 
 app.listen(PORT, () => {
-  console.log(`Backend en http://localhost:${PORT}`);
+  console.log(`Backend corriendo en http://localhost:${PORT}`);
 });

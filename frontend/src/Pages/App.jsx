@@ -3,15 +3,17 @@ import React, { useEffect, useState } from 'react';
 import Portadas from '../components/Portadas';
 import Nav from '../components/Nav';
 import axios from 'axios';
+import API_URL from '../config.js';
 
 function App() {
   const [anime1, setAnime1] = useState([]);
   
   useEffect(() => {
-    axios.get("http://localhost:3000/portadas").then((response) => {
-      setAnime1(response.data);
+    console.log("API_URL:", API_URL);
+    axios.get(`${API_URL}/portadas`).then((response) => {
+        setAnime1(response.data);
     });
-  }, []);
+}, []);
 
   return (
     <>
