@@ -7,4 +7,17 @@
 body {
     background-color: #282829;
     min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+#root > div, #root > * {
+    flex: 1;
 }

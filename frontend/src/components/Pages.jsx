@@ -8,7 +8,7 @@ import "../css/Directorio.css";
 function Pages({ searchTerm = "", generoId = "", ordenarPor = "alfabetico" }) {
     const [series, setSeries] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const seriesPerPage = 8;
+    const seriesPerPage = 24;
 
     useEffect(() => {
         if (generoId) {

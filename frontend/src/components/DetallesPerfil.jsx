@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CambiarFotoPerfil from "./CambiarFotoPerfil";
+import "../css/Perfil.css";
 
 function DetallesPerfil({ usuario, correo, imagen, created_at, esPropietario = false }) {
     const [imagenActual, setImagenActual] = useState(imagen);
@@ -19,7 +20,7 @@ function DetallesPerfil({ usuario, correo, imagen, created_at, esPropietario = f
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         navigate("/");
-        window.location.reload(); // Recargar para actualizar el Nav
+        window.location.reload();
     };
 
     const handleFotoCambiada = (nuevaImagen) => {
@@ -27,19 +28,23 @@ function DetallesPerfil({ usuario, correo, imagen, created_at, esPropietario = f
     };
 
     return (
-        <div>
-            <h2>Perfil de {usuario}</h2>
+        <div className="perfil-container">
             <img 
                 src={`/src/assets/pf/${imagenActual}`} 
                 alt={usuario}
-                width="100"
-                height="100"
+                className="perfil-avatar"
             />
-            {esPropietario && <CambiarFotoPerfil imagenActual={imagenActual} onFotoCambiada={handleFotoCambiada} />}
-            <p>Usuario: {usuario}</p>
-            {esPropietario && <p>Correo: {correo}</p>}
-            <p>Fecha de creación: {formatearFecha(created_at)}</p>
-            {esPropietario && <button onClick={handleLogout}>Cerrar Sesión</button>}
+            <div className="perfil-info">
+                <h2>{usuario}</h2>
+                {esPropietario && <p>{correo}</p>}
+                <p>Miembro desde {formatearFecha(created_at)}</p>
+                {esPropietario && (
+                    <div className="perfil-acciones">
+                        <CambiarFotoPerfil imagenActual={imagenActual} onFotoCambiada={handleFotoCambiada} />
+                        <button onClick={handleLogout}>Cerrar Sesión</button>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

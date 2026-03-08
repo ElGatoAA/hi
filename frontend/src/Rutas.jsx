@@ -5,18 +5,22 @@ import Serie from "./Pages/Serie";
 import Directorio from "./Pages/Directorio";
 import Auth from "./Pages/Auth";
 import Perfil from "./Pages/Perfil";
+import Footer from "./components/Footer";
 
 function Rutas() {
   return (
-    <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="/capitulo/:id" element={<Capitulo />} />
-      <Route path="/serie/:id" element={<Serie />} />
-      <Route path="/directorio" element={<Directorio />} />
-      <Route path="/auth" element={<Auth />} />
-      <Route path="/perfil" element={<Perfil />} />
-      <Route path="/perfil/:usuario" element={<Perfil />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/capitulo/:id" element={<Capitulo />} />
+        <Route path="/serie/:id" element={<Serie />} />
+        <Route path="/directorio" element={<Directorio />} />
+        <Route path="/auth" element={<Auth />} />
+        <Route path="/perfil" element={<Perfil />} />
+        <Route path="/perfil/:usuario" element={<Perfil />} />
+      </Routes>
+      <Footer />
+    </>
   );
 }
 

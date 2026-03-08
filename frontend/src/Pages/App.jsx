@@ -16,7 +16,9 @@ function App() {
   return (
     <>
       <Nav />
-      <h1>Portadas</h1>
+      <div className="directorio-header">
+            <h1>Nuevos capitulos</h1>
+      </div>
       <div className="portadas-grid">
         {anime1.map((item) => (
           <Portadas key={item.id} img={`/src/assets/${item.img}`} name={item.name} number={item.number} id={`/capitulo/${item.id}`} />

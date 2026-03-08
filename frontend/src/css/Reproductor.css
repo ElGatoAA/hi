@@ -1,0 +1,28 @@
+.reproductor-container {
+    background-color: #635E5E;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    color: white;
+    overflow: hidden;
+}
+
+.reproductor-container a {
+    padding: 24px 24px 0;
+}
+
+.reproductor-container a h1 {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.reproductor-container a h1:hover {
+    color: #2C87F5;
+}
+
+.reproductor-container iframe {
+    width: 100%;
+    aspect-ratio: 16/9;
+}

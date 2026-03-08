@@ -1,31 +1,30 @@
 import React, { useState } from "react";
 import Portadas from "./Portadas";
 import ButtonNavigator from "./Button_navigator";
+import "../css/Perfil.css";
 
 function Favoritos({ favoritos }) {
     const [currentPage, setCurrentPage] = useState(1);
-    const favoritosPerPage = 15;
+    const favoritosPerPage = 20;
 
-    // Calcular el total de páginas
     const totalPages = Math.ceil(favoritos.length / favoritosPerPage);
-
-    // Obtener los favoritos de la página actual
-    const indexOfLastFavorito = currentPage * favoritosPerPage;
-    const indexOfFirstFavorito = indexOfLastFavorito - favoritosPerPage;
-    const currentFavoritos = favoritos.slice(indexOfFirstFavorito, indexOfLastFavorito);
-
-    const handlePageChange = (newPage) => {
-        setCurrentPage(newPage);
-    };
+    const indexOfLast = currentPage * favoritosPerPage;
+    const indexOfFirst = indexOfLast - favoritosPerPage;
+    const currentFavoritos = favoritos.slice(indexOfFirst, indexOfLast);
 
     if (favoritos.length === 0) {
-        return <p>No tienes series en favoritos</p>;
+        return (
+            <div className="favoritos-container">
+                <h2>Favoritos</h2>
+                <p className="favoritos-vacio">No hay series en favoritos</p>
+            </div>
+        );
     }
 
     return (
-        <div>
-            <h2>Mis Favoritos</h2>
-            <div>
+        <div className="favoritos-container">
+            <h2>Favoritos</h2>
+            <div className="favoritos-grid">
                 {currentFavoritos.map((favorito) => (
                     <Portadas 
                         key={favorito.id} 
@@ -35,12 +34,11 @@ function Favoritos({ favoritos }) {
                     />
                 ))}
             </div>
-            
             {favoritos.length > favoritosPerPage && (
                 <ButtonNavigator 
                     currentPage={currentPage}
                     totalPages={totalPages}
-                    onPageChange={handlePageChange}
+                    onPageChange={setCurrentPage}
                 />
             )}
         </div>

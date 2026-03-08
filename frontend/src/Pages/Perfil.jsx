@@ -4,6 +4,7 @@ import axios from "axios";
 import Nav from "../components/Nav";
 import DetallesPerfil from "../components/DetallesPerfil";
 import Favoritos from "../components/Favoritos";
+import "../css/Perfil.css";
 
 function Perfil() {
     const [userData, setUserData] = useState(null);
@@ -11,16 +12,14 @@ function Perfil() {
     const [loading, setLoading] = useState(true);
     const [esPropietario, setEsPropietario] = useState(false);
     const navigate = useNavigate();
-    const { usuario } = useParams(); // Si viene de /perfil/:usuario
+    const { usuario } = useParams();
 
     useEffect(() => {
         const token = localStorage.getItem("token");
         const userLocal = localStorage.getItem("user");
         
-        // Resetear estado al cambiar de perfil
         setEsPropietario(false);
         
-        // Si no hay parámetro de usuario en la URL, es el perfil propio
         if (!usuario) {
             if (!token) {
                 navigate("/auth");
@@ -29,10 +28,7 @@ function Perfil() {
             cargarPerfilPropio(token);
             setEsPropietario(true);
         } else {
-            // Es el perfil de otro usuario
             cargarPerfilPublico(usuario);
-            
-            // Verificar si es el propietario
             if (userLocal) {
                 const user = JSON.parse(userLocal);
                 setEsPropietario(user.usuario === usuario);
@@ -42,20 +38,17 @@ function Perfil() {
 
     const cargarPerfilPropio = async (token) => {
         try {
-            // Cargar datos del perfil
             const perfilResponse = await axios.get(
                 "http://localhost:3000/perfil",
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             setUserData(perfilResponse.data);
 
-            // Cargar favoritos
             const favoritosResponse = await axios.get(
                 "http://localhost:3000/favoritos",
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             setFavoritos(favoritosResponse.data);
-
             setLoading(false);
         } catch (error) {
             console.error("Error al cargar datos:", error);
@@ -69,18 +62,15 @@ function Perfil() {
 
     const cargarPerfilPublico = async (nombreUsuario) => {
         try {
-            // Cargar datos del perfil público
             const perfilResponse = await axios.get(
                 `http://localhost:3000/perfil/${nombreUsuario}`
             );
             setUserData(perfilResponse.data);
 
-            // Cargar favoritos públicos
             const favoritosResponse = await axios.get(
                 `http://localhost:3000/favoritos/${nombreUsuario}`
             );
             setFavoritos(favoritosResponse.data);
-
             setLoading(false);
         } catch (error) {
             console.error("Error al cargar datos:", error);
@@ -92,12 +82,12 @@ function Perfil() {
     };
 
     if (loading) return <p>Cargando...</p>;
-
     if (!userData) return null;
 
     return (
-        <div>
-            <Nav />
+    <div>
+        <Nav />
+        <div className="perfil-layout">
             <DetallesPerfil 
                 usuario={userData.usuario}
                 correo={userData.correo}
@@ -107,7 +97,8 @@ function Perfil() {
             />
             <Favoritos favoritos={favoritos} />
         </div>
-    );
+    </div>
+);
 }
 
 export default Perfil;

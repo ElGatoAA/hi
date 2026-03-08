@@ -17,7 +17,7 @@ function Sugerencias({ serieId }) {
 
     return (
         <div className="sugerencias-container">
-            <h2>Series Relacionadas</h2>
+            <h2>Sugerencias</h2>
             <div className="sugerencias-grid">
                 {sugerencias.map((serie) => (
                     <Portadas
